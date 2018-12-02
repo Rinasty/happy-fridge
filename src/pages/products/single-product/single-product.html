@@ -1,0 +1,132 @@
+<ion-header>
+    <ion-navbar>
+      <ion-buttons>
+        <button ion-button clear (click)="onDismissModal()">Fermer</button>
+      </ion-buttons>
+      <ion-title>Ajout de produit</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-card>
+      <ion-card-header>Produit scanné :</ion-card-header>
+      <ion-card-content text-center>
+          <form novalidate (ngSubmit)="submitProduct()" [formGroup]="productForm">
+          <ion-list>  
+              <ion-item>
+                <ion-label stacked>Nom :</ion-label>
+                <ion-input #libelleInput type="text" [(ngModel)]="product.libelle" formControlName="libelle" [readonly]="readLibelle" [class.error1]="!productForm.controls.libelle.valid && productForm.controls.libelle.dirty"></ion-input>
+                <button
+                ion-button
+                item-right
+                round
+                icon-only
+                outline
+                type="button"
+                (click)="isLibelleReadonly()"><ion-icon name="create"></ion-icon></button>
+              </ion-item>
+              <div item-content class="error" *ngIf="this.productForm.get('libelle').hasError('required') && this.productForm.get('libelle').dirty">
+                  Entrez le nom d'un produit
+                </div>
+                <div item-content class="error" *ngIf="productForm.get('libelle').hasError('minlength') && productForm.get('libelle').dirty">
+                  Minimum 3 characters
+                </div>
+                <div item-content class="error" *ngIf="productForm.get('libelle').hasError('maxlength') && productForm.get('libelle').dirty">
+                  Maximum 30 characters
+                </div>
+                <div item-content class="error" *ngIf="productForm.get('libelle').hasError('pattern') && productForm.get('libelle').dirty">
+                  Utilisez seulement des lettres
+                </div>
+
+              <ion-item>
+                <ion-label stacked>Marque :</ion-label>
+                <ion-input #brandInput type="text" [(ngModel)]="product.brand" formControlName="brand" [readonly]="readBrand" [class.error1]="!productForm.controls.brand.valid && productForm.controls.brand.dirty"></ion-input>
+                <button
+                ion-button
+                item-right
+                round
+                icon-only
+                outline
+                type="button"
+                (click)="isBrandReadonly()"><ion-icon name="create"></ion-icon></button>
+              </ion-item>
+              <div item-content class="error" *ngIf="this.productForm.get('brand').hasError('required') && this.productForm.get('brand').dirty">
+                  Entrez la marque du produit
+                </div>
+                <div item-content class="error" *ngIf="productForm.get('brand').hasError('minlength') && productForm.get('brand').dirty">
+                  Minimum 3 caractères
+                </div>
+                <div item-content class="error" *ngIf="productForm.get('brand').hasError('maxlength') && productForm.get('brand').dirty">
+                  Maximum 30 caractères
+                </div>
+                <div item-content class="error" *ngIf="productForm.get('brand').hasError('pattern') && productForm.get('brand').dirty">
+                  Utilisez seulement des lettres
+                </div>
+
+              <ion-item>
+                <ion-label stacked>Quantité :</ion-label>
+                <ion-input type="number" [(ngModel)]="product.quantity" formControlName="quantity" [class.error1]="!productForm.controls.quantity.valid && productForm.controls.quantity.dirty"></ion-input>
+                <button
+                ion-button
+                item-right
+                round
+                icon-only
+                outline
+                type="button"
+                (click)="moreQuantity()"><ion-icon name="add"></ion-icon></button>
+                <button
+                ion-button
+                item-right
+                round
+                icon-only
+                outline
+                type="button"
+                (click)="lessQuantity()"><ion-icon name="remove"></ion-icon></button>
+              </ion-item>
+              <div item-content class="error" *ngIf="productForm.get('quantity').hasError('required') && productForm.get('quantity').dirty">
+                  Entrez une quantité
+              </div>
+                <div item-content class="error" *ngIf="productForm.get('quantity').hasError('pattern') && productForm.get('quantity').dirty">
+                  Utilisez seulement des chiffres
+                </div>
+                <div item-content class="error" *ngIf="productForm.get('quantity').value > 999 && productForm.get('quantity').dirty">
+                    Maximum 999 en quantité
+                  </div>
+              <ion-item>
+                  <ion-label stacked>DLC :</ion-label>
+                  <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" placeholder="Veuillez entrer une dlc" [(ngModel)]="product.dlc" formControlName="dlc" [class.error1]="!productForm.controls.dlc.valid && productForm.controls.dlc.dirty" doneText="Confirmer" cancelText="Annuler" min="{{ dateMin }}" max="{{ dateMax }}"></ion-datetime>
+              </ion-item>
+              <div item-content class="error" *ngIf="productForm.get('dlc').hasError('required') && productForm.get('dlc').touched">
+                N'oubliez pas la dlc
+            </div>
+              <button
+                ion-button
+                item-center
+                round
+                full
+                small
+                color="secondary"
+                type="submit"
+                [disabled]="!productForm.valid">Ajouter</button>
+          </ion-list>
+          <ion-input type="hidden" [(ngModel)]="product.barcode" formControlName="barcode"></ion-input>
+          <ion-input type="hidden" [(ngModel)]="product.isEat" formControlName="isEat"></ion-input>
+          <ion-input type="hidden" [(ngModel)]="product.isThrow" formControlName="isThrow"></ion-input>
+          <ion-input type="hidden" [(ngModel)]="product.dateAdd" formControlName="dateAdd"></ion-input>
+          </form>
+      </ion-card-content>
+      
+          
+      <style type="text/css">
+        .error {
+          color: rgb(223, 62, 62);
+          font-size: 12px;
+        }
+      
+        .error1 {
+          color: rgb(75, 75, 75);
+          border-bottom: 1px solid #ff0000;
+        }
+       </style>   
+        
+        

@@ -1,0 +1,7 @@
+{
+  "name": "mon-projet-HPTest",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
